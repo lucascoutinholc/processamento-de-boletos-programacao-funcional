@@ -1,8 +1,17 @@
 import java.util.List;
+import java.util.function.Function;
 
 public class ProcessaBoleto {
-    public void processar(LeituraRetorno conexao, String nomeArquivo) {
-        List<Boleto> resultado = conexao.lerArquivo(nomeArquivo);
-        System.out.println(resultado.toString());
+    private Function<String, List<Boleto>> leituraRetorno;
+
+    public ProcessaBoleto(Function<String, List<Boleto>> leituraRetorno) {
+        this.leituraRetorno = leituraRetorno;
+    }
+
+    public void processar(String nomeArquivo) {
+        List<Boleto> resultado = leituraRetorno.apply(nomeArquivo);
+        for (Boleto boleto : resultado) {
+            System.out.println(boleto);
+        }
     }
 }
